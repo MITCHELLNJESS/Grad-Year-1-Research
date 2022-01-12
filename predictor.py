@@ -49,8 +49,7 @@ scores = model.evaluate(X, y, verbose=0)
 print("Model Accuracy: %.2f%%" % (scores[1]*100))
 
 #create a function to generate prediction
-def generate_prediction():
-  subX='MTQ'
+def generate_prediction(subX):
   res=alphabet.find(subX)
   pattern=[res,res+1,res+2]
   x = numpy.reshape(pattern, (1, len(pattern), 1))
@@ -58,6 +57,39 @@ def generate_prediction():
   prediction = model.predict(x, verbose=0)
   index = numpy.argmax(prediction)
   result = int_to_char[index]
-  print(subX, "->", result)
+  return result
 
-generate_prediction()
+#create a function to convert list to string
+def listToString(s):
+	str1 = ""
+	for ele in s:
+		str1 += ele
+	return str1
+#predict all the patterns in the sequence
+for pattern in dataX:
+  x = numpy.reshape(pattern, (1, len(pattern), 1))
+  x = x / float(len(alphabet))
+  prediction = model.predict(x, verbose=0)
+  index = numpy.argmax(prediction)
+  result = int_to_char[index]
+  seq_in = [int_to_char[value] for value in pattern]
+  s_seq_in=listToString(seq_in)
+  print(s_seq_in, "->", result)
+
+#generate prediction for a particular input
+inputStr=input("Enter the input sequence: ")
+inputStr=inputStr.upper()
+inputString=list(inputStr)
+n=int(input("Enter number of next sequence: "))
+totalResult=[]
+
+for i in range(n):
+  input1=inputString[-3:]
+  input2=listToString(input1)
+  result=generate_prediction(input2)
+  inputString.append(result)
+  totalResult.append(result)
+print(inputStr," -> ",listToString(totalResult))
+
+
+print(len([l for l in model.layers if isinstance(1, tf.keras.layers.LSTM)]))
