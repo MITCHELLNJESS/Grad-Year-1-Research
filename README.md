@@ -7,4 +7,5 @@ Currently model was able to predict next letter or missing letter in sequence wi
 
 Language Used: Python 3
 Project: Using LSTM Model for protein sequence prediction
+
 Assocatiaed papaer: De Novo Protein Sequencing by Combining Top-Down and Bottom-Up Tandem Mass Spectra
